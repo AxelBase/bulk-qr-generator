@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>AxelBase – Bulk CSV QR Code Generator</title>
+    <link rel="icon" href="../../AxelLab-Logo.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+		<link href="../../_app/immutable/assets/0.Cj9F9U2w.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/app.BbJgLCCo.css" rel="stylesheet">
+		<link href="../../_app/immutable/assets/5.C7LuVq0Z.css" rel="stylesheet">
+		<link rel="modulepreload" href="../../_app/immutable/entry/start.DwW2wq3k.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/hhb8xtjg.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/DhkQSmsy.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/D4vXl5lK.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/FOGNE0r7.js">
+		<link rel="modulepreload" href="../../_app/immutable/entry/app.Bbn8jYeH.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/s3r78Btn.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/ZlzaR7eu.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/B_qI-dBd.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/B5KOuo3T.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/0.UA9yihmp.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/DXwWdNyp.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/DvcAePQ1.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/CxEExtHe.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/R4s_2Mr-.js">
+		<link rel="modulepreload" href="../../_app/immutable/nodes/5.DDlKZgHj.js">
+		<link rel="modulepreload" href="../../_app/immutable/chunks/DEM876Le.js"><!--1apmzc4--><meta name="description" content="Technical deep dive: how Bulk QR Code Generator creates thousands of QR codes entirely client-side using kjua, JSZip, and SvelteKit."/> <meta property="og:title" content="How It Works: From CSV to ZIP in Your Browser"/> <meta property="og:description" content="No backend. No uploads. See exactly how 10,000+ QR codes are generated instantly in the browser."/> <meta property="og:url" content="../../blog/posts/post2"/> <meta property="og:type" content="article"/> <meta name="twitter:card" content="summary_large_image"/><!----><title>How It Works: From CSV to ZIP in Your Browser • Blog</title>
+</head>
+<body data-sveltekit-preload-data="hover" data-bs-theme="light">
+    <div style="display: contents"><!--[--><!--[--><!----><header class="custom-navbar"><nav class="container" style="display: flex; justify-content: space-between; align-items: center; height: 100%;"><div style="display: flex; align-items: center; gap: 1rem;"><a href="../../" aria-label="Home"><img src="../../AxelLab-Logo.ico" alt="Logo" class="navbar-brand-logo"/></a> <a class="navbar-brand-text" href="../../">AxelBase</a></div> <div style="display: flex; align-items: center; gap: 1.5rem;"><ul class="d-none d-md-flex" style="list-style: none; display: flex; align-items: center; gap: 1.5rem; margin: 0; padding: 0;"><li><a class="nav-link" href="../../">Home</a></li> <li><a class="nav-link" href="../../#about">About</a></li> <li><a class="nav-link" href="../../#how-to">How to</a></li> <li><a class="nav-link" href="../../#faq">FAQ</a></li> <li><a class="nav-link" href="../../blog">Blog</a></li></ul> <button class="btn-theme-toggle" aria-label="Toggle Dark Mode"><i class="bi bi-moon-stars-fill svelte-12qhfyh" id="theme-icon"></i></button> <div class="bmac-nav-item"><button class="bmac-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.35,22.2L12,22A10,10,0,0,1,2,12V10A2,2,0,0,1,4,8H7.2A5.13,5.13,0,0,1,12,3A5.13,5.13,0,0,1,16.8,8H20A2,2,0,0,1,22,10V12A10,10,0,0,1,12.35,22.2M4,10V12A8,8,0,0,0,12,20A8,8,0,0,0,20,12V10H16.8A5.11,5.11,0,0,1,12.5,5.12A5.15,5.15,0,0,1,7.2,10H4Z"></path></svg> <span class="d-none d-sm-inline">Coffee</span></button> <!--[!--><!--]--></div></div></nav></header> <!--[--><!----><div class="container fade-in post-layout svelte-1apmzc4"><div class="breadcrumbs svelte-1apmzc4"><a href="../../blog" class="svelte-1apmzc4">Blog</a> <span>/</span> <p>How It Works: From CSV to ZIP in Your Browser</p></div> <article class="prose svelte-1apmzc4"><h1 class="svelte-1apmzc4">How It Works: From CSV to ZIP in Your Browser</h1> <p class="post-meta svelte-1apmzc4">Published: November 22, 2025</p> <p>You drop a CSV. You click “Generate”. Seconds later, you have a ZIP with thousands of QR codes. But how is this possible <em>without a server</em>?</p> <h2 class="svelte-1apmzc4">The Magic Stack</h2> <p>This tool is built with four key technologies that make client-side bulk generation possible:</p> <ul class="svelte-1apmzc4"><li class="svelte-1apmzc4"><strong>kjua</strong> – Lightweight, fast QR code renderer (SVG &amp; PNG)</li> <li class="svelte-1apmzc4"><strong>JSZip</strong> – Create ZIP files directly in memory</li> <li class="svelte-1apmzc4"><strong>PapaParse</strong> – Blazing-fast CSV parsing in the browser</li> <li class="svelte-1apmzc4"><strong>SvelteKit + adapter-static</strong> – Zero-config GitHub Pages deployment</li></ul> <h2 class="svelte-1apmzc4">Step-by-Step Process</h2> <p>When you upload or paste a CSV:</p> <ol><li>PapaParse instantly converts it into a JavaScript array</li> <li>You choose which column contains the QR content (and optionally filename)</li> <li>On “Generate”, a loop runs asynchronously</li> <li>For each row: kjua renders a QR code (as canvas or SVG)</li> <li>Blob is created and added to a JSZip instance</li> <li>Progress bar updates smoothly using requestAnimationFrame</li> <li>Final ZIP is streamed directly to your downloads folder</li></ol> <h2 class="svelte-1apmzc4">No Memory Leaks, No Freezes</h2> <p>Generating 5,000+ images could crash a tab. We prevent this with:</p> <ul class="svelte-1apmzc4"><li class="svelte-1apmzc4">Processing only 20 rows per frame</li> <li class="svelte-1apmzc4">Using <code>Blob</code> and <code>URL.createObjectURL</code> efficiently</li> <li class="svelte-1apmzc4">Releasing memory as soon as possible</li></ul> <p>Result: Even 20,000 QR codes generate smoothly on most devices.</p> <p class="italic-note svelte-1apmzc4">This is the power of modern web standards — desktop-class apps in the browser.</p></article></div><!----><!--]--> <footer class="custom-footer"><div class="container d-flex justify-content-between align-items-center"><span class="footer-link">© 2025 AxelBase CSV Bulk QR Code Generator</span> <div class="d-flex gap-3"><a href="../../privacy" class="footer-link">Privacy</a> <a href="../../terms" class="footer-link">Terms</a></div></div></footer><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1mmgr5l = {
+						base: new URL("../..", location).pathname.slice(0, -1),
+						assets: "/bulk-qr-generator"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../../_app/immutable/entry/start.DwW2wq3k.js"),
+						import("../../_app/immutable/entry/app.Bbn8jYeH.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+    <script type="module" src="../../bootstrap.bundle.min.js"></script>
+</body>
+</html>

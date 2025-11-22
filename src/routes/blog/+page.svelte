@@ -1,0 +1,121 @@
+<script lang="ts">
+  import { base } from '$app/paths';
+  
+const posts = [
+  { 
+    href: '/blog/posts/post1', 
+    title: 'Introducing Bulk QR Code Generator', 
+    description: 'A 100% client-side tool to generate thousands of QR codes from CSV — no server, no upload, works offline.' 
+  },
+  { 
+    href: '/blog/posts/post2', 
+    title: 'How It Works: From CSV to ZIP in Your Browser', 
+    description: 'Deep dive into the fully client-side architecture using kjua, JSZip, PapaParse, and SvelteKit static adapter.' 
+  },
+  { 
+    href: '/blog/posts/post3', 
+    title: 'Generate 10,000+ QR Codes Without Crashing', 
+    description: 'Performance tricks: cooperative yielding, async chunking, and memory-efficient blob handling in the browser.' 
+  },
+  { 
+    href: '/blog/posts/post4', 
+    title: 'Custom Filenames, Prefixes, and Colors', 
+    description: 'Use any CSV column for filenames, add automatic URL prefix/suffix, and fully customize size, colors, and error correction.' 
+  },
+  { 
+    href: '/blog/posts/post5', 
+    title: 'PNG vs SVG: Which Format Should You Use?', 
+    description: 'Technical comparison of raster vs vector QR codes — file size, scalability, print quality, and real-world recommendations.' 
+  },
+  { 
+    href: '/blog/posts/post6', 
+    title: 'Understanding QR Code Error Correction Levels', 
+    description: 'Deep dive into L, M, Q, H levels — recovery capacity, damage tolerance, and when to use each for logos and harsh environments.' 
+  },
+  { 
+    href: '/blog/posts/post7', 
+    title: 'QR Code Versions, Module Size & Minimum Print Requirements', 
+    description: 'The math behind QR versions (1–40), minimum scannable print size, quiet zones, and avoiding common printing failures.' 
+  }
+];</script>
+
+<svelte:head>
+  <title>Blog • Bulk QR Code Generator</title>
+  <meta name="description" content="Learn how to generate thousands of QR codes instantly from CSV. Tutorials, performance tips, and real-world use cases." />
+</svelte:head>
+
+<div class="container py-5 blog-index">
+  <header class="blog-header text-center mb-5">
+    <h1 class="display-4 fw-bold mb-4">
+      Blog: Bulk QR Insights
+    </h1>
+    <p class="lead text-muted col-lg-8 mx-auto">
+      Tutorials, performance guides, and real-world examples for the world's fastest 
+      100% client-side Bulk QR Code Generator. 
+      Built with SvelteKit, deployed on GitHub Pages — completely free and open source.
+    </p>
+    <p class="mt-4">
+      <a href="https://github.com/axelbase/bulk-qr-generator" target="_blank" class="btn btn-outline-primary">
+        View on GitHub
+      </a>
+    </p>
+  </header>
+
+  <div class="posts-grid">
+    {#each posts as post}
+      <a href="{base}{post.href}" class="card post-card h-100 shadow-sm border-0">
+        <div class="card-body d-flex flex-column">
+          <h2 class="post-title h5 fw-bold text-primary mb-3">{post.title}</h2>
+          <p class="post-description text-muted flex-grow-1 small">{post.description}</p>
+          <span class="read-more mt-3 text-primary fw-semibold">
+            Read Article →
+          </span>
+        </div>
+      </a>
+    {/each}
+  </div>
+</div>
+
+<style>
+  .blog-index {
+    min-height: 80vh;
+  }
+
+  .blog-header {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .post-card {
+    transition: all 0.3s ease;
+    text-decoration: none;
+    background: #fff;
+  }
+
+  .post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+  }
+
+  .post-card:hover .read-more {
+    transform: translateX(8px);
+  }
+
+  .read-more {
+    transition: transform 0.3s ease;
+    align-self: flex-start;
+  }
+
+  @media (max-width: 576px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
